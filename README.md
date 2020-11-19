@@ -23,38 +23,11 @@ This will produce the `q` compiler in your current directory.
 ./examples/hello/hello
 ```
 
-## Goals
+## Features
 
 * Fast compilation (<1 ms for simple programs)
 * Small binaries ("Hello World" is 247 bytes)
 * High performance (compete with C and Rust)
-
-### Sub-goals
-
-To achieve these goals, we will implement a new backend with:
-
-* No binary dependencies (not even libc)
-* No compiler dependencies (no LLVM, no GCC, ...)
-
-We'll also say goodbye to the following:
-
-* No global state (all mutable variables are local)
-* No side effects when importing a package
-* No name shadowing, names never change their meaning
-* No complicated classes, just simple data structures
-
-Productivity is nice but bugs in your code are not. We'll use:
-
-* Type system (reduce bugs at compile time)
-* Linters (reduce bugs at compile time)
-* Tests (reduce bugs at test time)
-* Contracts (reduce bugs at run time)
-
-Quality of life features:
-
-* Simple dependency management
-* Auto-formatter for source code
-* User-friendly compiler messages
 
 ## Todo
 
@@ -141,6 +114,33 @@ Quality of life features:
 * [ ] Mac
 * [ ] Windows
 * [ ] ...
+
+## Goals
+
+We will implement a new backend with:
+
+* No binary dependencies (not even libc)
+* No compiler dependencies (no LLVM, no GCC, ...)
+
+We'll also say goodbye to the following:
+
+* No global state (all mutable variables are local)
+* No side effects when importing a package
+* No name shadowing, names never change their meaning
+* No complicated classes, just simple data structures
+
+Productivity is nice but bugs in your code are not. We'll use:
+
+* Type system (reduce bugs at compile time)
+* Linters (reduce bugs at compile time)
+* Tests (reduce bugs at test time)
+* Contracts (reduce bugs at run time)
+
+Quality of life features:
+
+* Simple dependency management
+* Auto-formatter for source code
+* User-friendly compiler messages
 
 ## FAQ
 
