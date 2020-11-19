@@ -1,11 +1,21 @@
 linters:
   enable-all: true
   disable:
-    - lll
-    - gocognit
-    - gocyclo
-    - gochecknoglobals
-    - gosec
+    - exhaustive
+    - exhaustivestruct
+    - errorlint
     - funlen
+    - gocognit
+    - gochecknoglobals
+    - gocyclo
+    - godot
+    - goerr113
+    - gofumpt
+    - gomnd
+    - gosec
+    - lll
+    - nestif
+    - nlreturn
     - stylecheck
+    - wrapcheck
     - wsl
