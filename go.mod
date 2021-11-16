@@ -8,5 +8,5 @@ require (
 	github.com/akyoto/color v1.8.11
 	github.com/akyoto/directory v0.1.2
 	github.com/akyoto/stringutils v0.3.1
-	golang.org/x/sys v0.0.0-20201118182958-a01c418693c7 // indirect
+	golang.org/x/sys v0.0.0-20211116061358-0a5406a5449c // indirect
 )
