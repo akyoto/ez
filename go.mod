@@ -1,12 +1,17 @@
 module github.com/akyoto/q
 
-go 1.13
+go 1.18
 
 require (
-	github.com/akyoto/asm v0.4.10
+	github.com/akyoto/asm v0.5.0
 	github.com/akyoto/assert v0.2.4
-	github.com/akyoto/color v1.8.11
+	github.com/akyoto/color v1.8.12
 	github.com/akyoto/directory v0.1.2
 	github.com/akyoto/stringutils v0.3.1
-	golang.org/x/sys v0.0.0-20211116061358-0a5406a5449c // indirect
+)
+
+require (
+	github.com/akyoto/colorable v0.1.7 // indirect
+	github.com/akyoto/tty v0.1.4 // indirect
+	golang.org/x/sys v0.0.0-20220704084225-05e143d24a9e // indirect
 )

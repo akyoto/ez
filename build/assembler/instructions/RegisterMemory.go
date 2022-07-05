@@ -21,7 +21,7 @@ type RegisterMemory struct {
 
 // Exec writes the instruction to the final assembler.
 func (instr *RegisterMemory) Exec(a *asm.Assembler) {
-	start := a.Len()
+	start := a.Position()
 
 	switch instr.Mnemonic {
 	case mnemonics.LOAD:
@@ -31,7 +31,7 @@ func (instr *RegisterMemory) Exec(a *asm.Assembler) {
 		panic("This should never happen!")
 	}
 
-	instr.size = byte(a.Len() - start)
+	instr.size = byte(a.Position() - start)
 }
 
 // String implements the string serialization.

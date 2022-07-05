@@ -30,7 +30,7 @@ func (instr *Base) Size() byte {
 
 // Exec writes the instruction to the final assembler.
 func (instr *Base) Exec(a *asm.Assembler) {
-	start := a.Len()
+	start := a.Position()
 
 	switch instr.Mnemonic {
 	case mnemonics.RET:
@@ -43,7 +43,7 @@ func (instr *Base) Exec(a *asm.Assembler) {
 		a.CPUID()
 	}
 
-	instr.size = byte(a.Len() - start)
+	instr.size = byte(a.Position() - start)
 }
 
 // String implements the string serialization.

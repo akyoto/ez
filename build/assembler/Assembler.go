@@ -38,7 +38,7 @@ func (a *Assembler) AddLabel(labelName string) {
 
 // AddString adds a string.
 func (a *Assembler) AddString(text string) uint32 {
-	return a.final.Strings.Add(text)
+	return a.final.AddData([]byte(text))
 }
 
 // Finalize generates the final assembly code.

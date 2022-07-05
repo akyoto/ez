@@ -18,7 +18,7 @@ type RegisterAddress struct {
 
 // Exec writes the instruction to the final assembler.
 func (instr *RegisterAddress) Exec(a *asm.Assembler) {
-	start := a.Len()
+	start := a.Position()
 
 	//nolint:gocritic
 	switch instr.Mnemonic {
@@ -26,7 +26,7 @@ func (instr *RegisterAddress) Exec(a *asm.Assembler) {
 		a.MoveRegisterAddress(instr.Destination.Name, instr.Address)
 	}
 
-	instr.size = byte(a.Len() - start)
+	instr.size = byte(a.Position() - start)
 }
 
 // String implements the string serialization.

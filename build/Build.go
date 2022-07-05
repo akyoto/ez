@@ -150,11 +150,8 @@ func (build *Build) Compile() (*asm.Assembler, error) {
 		}
 	}
 
-	for _, err := range finalCode.Verify() {
-		return nil, err
-	}
-
-	return finalCode, nil
+	err := finalCode.Compile()
+	return finalCode, err
 }
 
 // writeToDisk writes the executable file to disk.

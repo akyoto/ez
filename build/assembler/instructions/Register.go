@@ -17,7 +17,7 @@ type Register struct {
 
 // Exec writes the instruction to the final assembler.
 func (instr *Register) Exec(a *asm.Assembler) {
-	start := a.Len()
+	start := a.Position()
 
 	switch instr.Mnemonic {
 	case mnemonics.INC:
@@ -39,7 +39,7 @@ func (instr *Register) Exec(a *asm.Assembler) {
 		a.PopRegister(instr.Destination.Name)
 	}
 
-	instr.size = byte(a.Len() - start)
+	instr.size = byte(a.Position() - start)
 }
 
 // String implements the string serialization.

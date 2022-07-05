@@ -21,7 +21,7 @@ type MemoryRegister struct {
 
 // Exec writes the instruction to the final assembler.
 func (instr *MemoryRegister) Exec(a *asm.Assembler) {
-	start := a.Len()
+	start := a.Position()
 
 	switch instr.Mnemonic {
 	case mnemonics.STORE:
@@ -31,7 +31,7 @@ func (instr *MemoryRegister) Exec(a *asm.Assembler) {
 		panic("This should never happen!")
 	}
 
-	instr.size = byte(a.Len() - start)
+	instr.size = byte(a.Position() - start)
 }
 
 // String implements the string serialization.
