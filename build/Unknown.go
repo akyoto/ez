@@ -133,6 +133,10 @@ func UnknownFieldError(field string, typ *types.Type) error {
 		knownFields = append(knownFields, field.Name)
 	}
 
+	if len(knownFields) == 0 {
+		return &errors.UnknownField{TypeName: typ.Name, Name: field}
+	}
+
 	// Suggest a type name based on the similarity to known functions
 	sort.Slice(knownFields, func(a, b int) bool {
 		aSimilarity := similarity.JaroWinkler(field, knownFields[a])
