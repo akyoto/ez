@@ -39,7 +39,7 @@ func (file *File) scanStruct(tokens token.List, index token.Position) (*types.Ty
 
 			if field.Type == nil {
 				typeName := t.Text()
-				field.Type = file.environment.Types[typeName]
+				field.Type = file.Type(typeName)
 
 				if field.Type == nil {
 					return typ, index, NewError(errors.New(&errors.UnknownType{Name: typeName}), file.path, tokens[:index], nil)

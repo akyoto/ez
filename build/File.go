@@ -8,6 +8,7 @@ import (
 
 	"github.com/akyoto/q/build/errors"
 	"github.com/akyoto/q/build/token"
+	"github.com/akyoto/q/build/types"
 )
 
 // File represents a single source file.
@@ -15,6 +16,7 @@ type File struct {
 	tokens        []token.Token
 	imports       map[string]*Import
 	environment   *Environment
+	pkg           *Package
 	path          string
 	functionCount int64
 	Error         error
@@ -117,4 +119,16 @@ func (file *File) Close() {
 	}
 
 	file.tokens = nil
+}
+
+// Type returns the type with the given name.
+func (file *File) Type(name string) *types.Type {
+	t := file.environment.Types[name]
+
+	if t == nil {
+		prefix := file.pkg.Name + "."
+		t = file.environment.Types[prefix+name]
+	}
+
+	return t
 }

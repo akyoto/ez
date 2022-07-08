@@ -67,8 +67,8 @@ func Compile(function *Function, environment *Environment, optimize bool, verbos
 
 	// Return types
 	if len(function.ReturnTypeTokens) > 0 {
-		typeName := function.ReturnTypeTokens[0].Text()
-		typ := environment.Types[typeName]
+		typeName := TypeNameFromTokens(function.ReturnTypeTokens)
+		typ := function.File.Type(typeName)
 
 		if typ == nil {
 			err = errors.New(state.environment.UnknownTypeError(typeName))
@@ -152,15 +152,16 @@ func Compile(function *Function, environment *Environment, optimize bool, verbos
 // declareParameters declares the given parameters as variables inside the scope.
 // It also assigns a register to each variable.
 func declareParameters(function *Function, scopes *ScopeStack, registers *register.Manager, identifierLifeTime map[string]token.Position) error {
+	file := function.File
+
 	for i, parameter := range function.Parameters {
 		if i >= len(registers.Call) {
 			return errors.New(errors.ExceededMaxParameters)
 		}
 
 		register := registers.Call[i]
-		typeName := parameter.TypeTokens[0].Text()
-		file := function.File
-		parameter.Type = file.environment.Types[typeName]
+		typeName := TypeNameFromTokens(parameter.TypeTokens)
+		parameter.Type = file.Type(typeName)
 
 		if parameter.Type == nil {
 			return NewError(errors.New(&errors.UnknownType{Name: typeName}), file.path, file.tokens[:parameter.Position+2], function)

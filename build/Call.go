@@ -39,12 +39,11 @@ func (state *State) CallExpression(expr *expression.Expression) error {
 	isBuiltin := false
 
 	if function == nil {
-		function = BuiltinFunctions[functionName]
-		isBuiltin = true
+		function, isBuiltin = BuiltinFunctions[functionName]
 	}
 
 	if function == nil {
-		typ := state.environment.Types[functionName]
+		typ := state.function.File.Type(functionName)
 
 		if typ != nil {
 			state.assembler.MoveRegisterNumber(state.registers.Syscall[0], 9)

@@ -10,14 +10,14 @@ import (
 )
 
 // FindFunctions scans the directory for functions.
-func FindFunctions(dir string, env *Environment) (<-chan *Function, <-chan *types.Type, <-chan *Import, <-chan error) {
+func FindFunctions(pkg *Package, env *Environment) (<-chan *Function, <-chan *types.Type, <-chan *Import, <-chan error) {
 	functions := make(chan *Function, 16)
 	structs := make(chan *types.Type)
 	imports := make(chan *Import)
 	errors := make(chan error)
 
 	go func() {
-		findFunctions(dir, env, functions, structs, imports, errors)
+		findFunctions(pkg, env, functions, structs, imports, errors)
 
 		close(functions)
 		close(imports)
@@ -28,20 +28,20 @@ func FindFunctions(dir string, env *Environment) (<-chan *Function, <-chan *type
 }
 
 // findFunctions scans the directory for functions without channel allocations.
-func findFunctions(dir string, env *Environment, functions chan<- *Function, structs chan<- *types.Type, imports chan<- *Import, errors chan<- error) {
+func findFunctions(pkg *Package, env *Environment, functions chan<- *Function, structs chan<- *types.Type, imports chan<- *Import, errors chan<- error) {
 	wg := sync.WaitGroup{}
 
-	directory.Walk(dir, func(name string) {
+	directory.Walk(pkg.Path, func(name string) {
 		if !strings.HasSuffix(name, ".q") {
 			return
 		}
 
-		fullPath := filepath.Join(dir, name)
+		fullPath := filepath.Join(pkg.Path, name)
 		wg.Add(1)
 
 		go func() {
 			defer wg.Done()
-			findFunctionsInFile(fullPath, env, functions, structs, imports, errors)
+			findFunctionsInFile(fullPath, pkg, env, functions, structs, imports, errors)
 		}()
 	})
 
@@ -49,14 +49,14 @@ func findFunctions(dir string, env *Environment, functions chan<- *Function, str
 }
 
 // FindFunctionsInFile a single file for functions.
-func FindFunctionsInFile(fileName string, env *Environment) (<-chan *Function, <-chan *types.Type, <-chan *Import, <-chan error) {
+func FindFunctionsInFile(fileName string, pkg *Package, env *Environment) (<-chan *Function, <-chan *types.Type, <-chan *Import, <-chan error) {
 	functions := make(chan *Function, 16)
 	structs := make(chan *types.Type)
 	imports := make(chan *Import)
 	errors := make(chan error)
 
 	go func() {
-		findFunctionsInFile(fileName, env, functions, structs, imports, errors)
+		findFunctionsInFile(fileName, pkg, env, functions, structs, imports, errors)
 
 		close(functions)
 		close(imports)
@@ -67,9 +67,10 @@ func FindFunctionsInFile(fileName string, env *Environment) (<-chan *Function, <
 }
 
 // findFunctionsInFile scans the file for functions without channel allocations.
-func findFunctionsInFile(fileName string, env *Environment, functions chan<- *Function, structs chan<- *types.Type, imports chan<- *Import, errors chan<- error) {
+func findFunctionsInFile(fileName string, pkg *Package, env *Environment, functions chan<- *Function, structs chan<- *types.Type, imports chan<- *Import, errors chan<- error) {
 	file := NewFile(fileName)
 	file.environment = env
+	file.pkg = pkg
 	err := file.Tokenize()
 
 	if err != nil {

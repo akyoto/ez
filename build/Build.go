@@ -15,10 +15,10 @@ import (
 
 // Build describes a compiler build.
 type Build struct {
-	Path            string
+	MainPackage     *Package
+	Environment     *Environment
 	ExecutablePath  string
 	ExecutableName  string
-	Environment     *Environment
 	WriteExecutable bool
 	Optimize        bool
 	ShowTimings     bool
@@ -40,8 +40,13 @@ func New(directory string) (*Build, error) {
 		return nil, err
 	}
 
+	pkg := &Package{
+		Name: MainPackageName,
+		Path: directory,
+	}
+
 	build := &Build{
-		Path:            directory,
+		MainPackage:     pkg,
 		ExecutableName:  executableName,
 		ExecutablePath:  filepath.Join(directory, executableName),
 		WriteExecutable: true,
@@ -62,7 +67,7 @@ func (build *Build) Run() error {
 
 	// Scan
 	start = time.Now()
-	err := build.Environment.ImportDirectory(build.Path, "")
+	err := build.Environment.ImportDirectory(build.MainPackage)
 
 	if err != nil {
 		return err
@@ -104,7 +109,8 @@ func (build *Build) Run() error {
 
 // Compile compiles all the functions in the environment.
 func (build *Build) Compile() (*asm.Assembler, error) {
-	_, exists := build.Environment.Functions["main"]
+	mainFunction := "main"
+	_, exists := build.Environment.Functions[mainFunction]
 
 	if !exists {
 		return nil, errors.New("Function 'main' has not been defined")
@@ -114,7 +120,7 @@ func (build *Build) Compile() (*asm.Assembler, error) {
 
 	// Generate machine code
 	finalCode := asm.New()
-	finalCode.Call("main")
+	finalCode.Call(mainFunction)
 	finalCode.Exit(0)
 
 	if !build.WriteExecutable {
@@ -134,7 +140,7 @@ func (build *Build) Compile() (*asm.Assembler, error) {
 			continue
 		}
 
-		if function.Name != "main" && function.CanInline() {
+		if function.Name != mainFunction && function.CanInline() {
 			continue
 		}
 
