@@ -13,5 +13,5 @@ require (
 require (
 	github.com/akyoto/colorable v0.1.7 // indirect
 	github.com/akyoto/tty v0.1.4 // indirect
-	golang.org/x/sys v0.0.0-20220704084225-05e143d24a9e // indirect
+	golang.org/x/sys v0.0.0-20220808155132-1c4a2a72c664 // indirect
 )

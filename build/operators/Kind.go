@@ -10,7 +10,7 @@ const (
 	// Assignment moves data inside a variable or struct field.
 	Assignment
 
-	// Call represents a function call.
+	// Comparison compares two values.
 	Comparison
 )
 

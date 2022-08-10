@@ -3,7 +3,6 @@ package cli
 import (
 	"bytes"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"runtime"
@@ -82,7 +81,7 @@ func System() {
 // cpuModelName returns the model name of the CPU.
 func cpuModelName() string {
 	// Via "/proc/cpuinfo" (Linux)
-	cpuInfoBytes, err := ioutil.ReadFile("/proc/cpuinfo")
+	cpuInfoBytes, err := os.ReadFile("/proc/cpuinfo")
 
 	if err == nil {
 		cpuInfo := string(cpuInfoBytes)

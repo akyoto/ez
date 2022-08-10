@@ -1,7 +1,7 @@
 package main_test
 
 import (
-	"io/ioutil"
+	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -13,8 +13,8 @@ import (
 )
 
 func TestMain(m *testing.M) {
-	log.Info.SetOutput(ioutil.Discard)
-	log.Error.SetOutput(ioutil.Discard)
+	log.Info.SetOutput(io.Discard)
+	log.Error.SetOutput(io.Discard)
 	os.Exit(m.Run())
 }
 

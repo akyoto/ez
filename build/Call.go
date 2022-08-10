@@ -195,7 +195,11 @@ func (state *State) BeforeCall(function *Function, parameters []*expression.Expr
 			continue
 		}
 
-		variable := callModifiedRegister.User().(*Variable)
+		variable, isVariable := callModifiedRegister.User().(*Variable)
+
+		if !isVariable {
+			continue
+		}
 
 		// Don't push variables that are going to die after this instruction
 		if variable.AliveUntil < state.InstructionEndPosition() {
