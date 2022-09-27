@@ -1,6 +1,6 @@
 # build
 
-This package contains the source code for the compiler invoked by the `build` command.
+This package contains the source code for the compiler invoked by the `build` command. The CLI creates a new `Build` object for the directory we are building the package in and calls `build.Run()`. See `Build.go` for more information.
 
 ## Organization
 
