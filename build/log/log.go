@@ -13,7 +13,12 @@ var (
 
 	// Error is used for error messages.
 	Error = log.New(os.Stderr, "", 0)
+)
 
-	// Faint is the color used for printing faint messages.
-	Faint = color.New(color.Faint)
+var (
+	// FaintColor is the color used for printing faint messages.
+	FaintColor = color.New(color.Faint)
+
+	// CommentColor is the color used for printing comments.
+	CommentColor = color.New(color.FgYellow)
 )

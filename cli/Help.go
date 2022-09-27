@@ -8,7 +8,7 @@ import (
 // Help shows the command line argument usage.
 func Help() {
 	log.Error.Println("")
-	log.Error.Println("q build", log.Faint.Sprint("[directory]"))
+	log.Error.Println("q build", log.FaintColor.Sprint("[directory]"))
 	log.Error.Println("q system")
 	log.Error.Println("")
 	log.Error.Println(color.YellowString("# build"))

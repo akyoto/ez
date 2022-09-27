@@ -48,5 +48,5 @@ func (instr *Base) Exec(a *asm.Assembler) {
 
 // String implements the string serialization.
 func (instr *Base) String() string {
-	return fmt.Sprintf("[%d]   %s", instr.size, mnemonicColor.Sprint(instr.Mnemonic))
+	return fmt.Sprintf("[%d]     %s", instr.size, mnemonicColor.Sprint(instr.Mnemonic))
 }

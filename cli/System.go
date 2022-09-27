@@ -17,7 +17,7 @@ import (
 // System shows system information.
 func System() {
 	const prefix = "%-19s"
-	key := log.Faint.Sprint
+	key := log.FaintColor.Sprint
 	value := fmt.Sprint
 	errorValue := color.RedString
 

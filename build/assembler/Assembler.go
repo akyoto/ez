@@ -11,17 +11,17 @@ import (
 // Assembler produces machine code.
 type Assembler struct {
 	Instructions    []instruction
+	Verbose         bool
 	usedRegisterIDs []register.ID
 	final           *asm.Assembler
-	verbose         bool
 }
 
 // New creates a new assembler.
 func New(verbose bool) *Assembler {
 	return &Assembler{
 		Instructions: make([]instruction, 0, 8),
+		Verbose:      verbose,
 		final:        asm.New(),
-		verbose:      verbose,
 	}
 }
 
@@ -34,6 +34,11 @@ func (a *Assembler) AddLabel(labelName string) {
 	}
 
 	a.Instructions = append(a.Instructions, &instructions.AddLabel{Label: labelName})
+}
+
+// AddComment adds an instruction that adds a comments.
+func (a *Assembler) AddComment(message string) {
+	a.Instructions = append(a.Instructions, &instructions.AddComment{Comment: message})
 }
 
 // AddString adds a string.
@@ -104,7 +109,7 @@ func (a *Assembler) doRegister(mnemonic string, destination *register.Register) 
 
 	instr.SetName(mnemonic)
 
-	if a.verbose {
+	if a.Verbose {
 		instr.UsedBy = destination.UserString()
 	}
 
@@ -121,7 +126,7 @@ func (a *Assembler) doRegisterRegister(mnemonic string, destination *register.Re
 
 	instr.SetName(mnemonic)
 
-	if a.verbose {
+	if a.Verbose {
 		instr.UsedBy1 = destination.UserString()
 		instr.UsedBy2 = source.UserString()
 	}
@@ -140,7 +145,7 @@ func (a *Assembler) doRegisterNumber(mnemonic string, destination *register.Regi
 
 	instr.SetName(mnemonic)
 
-	if a.verbose {
+	if a.Verbose {
 		instr.UsedBy = destination.UserString()
 	}
 
@@ -157,7 +162,7 @@ func (a *Assembler) doRegisterAddress(mnemonic string, destination *register.Reg
 
 	instr.SetName(mnemonic)
 
-	if a.verbose {
+	if a.Verbose {
 		instr.UsedBy = destination.UserString()
 	}
 
@@ -176,7 +181,7 @@ func (a *Assembler) doMemoryNumber(mnemonic string, destination *register.Regist
 
 	instr.SetName(mnemonic)
 
-	if a.verbose {
+	if a.Verbose {
 		instr.UsedBy = destination.UserString()
 	}
 
@@ -195,7 +200,7 @@ func (a *Assembler) doMemoryRegister(mnemonic string, destination *register.Regi
 
 	instr.SetName(mnemonic)
 
-	if a.verbose {
+	if a.Verbose {
 		instr.UsedBy1 = destination.UserString()
 		instr.UsedBy2 = source.UserString()
 	}
@@ -216,7 +221,7 @@ func (a *Assembler) doRegisterMemory(mnemonic string, destination *register.Regi
 
 	instr.SetName(mnemonic)
 
-	if a.verbose {
+	if a.Verbose {
 		instr.UsedBy1 = destination.UserString()
 		instr.UsedBy2 = source.UserString()
 	}

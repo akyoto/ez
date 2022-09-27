@@ -15,7 +15,7 @@ type WithStack struct {
 }
 
 func (err *WithStack) Error() string {
-	return fmt.Sprintf("%v\n\n%s", err.Err, log.Faint.Sprint(err.Stack))
+	return fmt.Sprintf("%v\n\n%s", err.Err, log.FaintColor.Sprint(err.Stack))
 }
 
 // New creates a new error with stack information.

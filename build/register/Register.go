@@ -65,5 +65,5 @@ func (register *Register) String() string {
 
 // StringWithUser returns a human-readable representation of the register.
 func (register *Register) StringWithUser(usedBy string) string {
-	return fmt.Sprintf("%s%s%v", register.Name, log.Faint.Sprint("="), color.GreenString(usedBy))
+	return fmt.Sprintf("%s%s%v", register.Name, log.FaintColor.Sprint("="), color.GreenString(usedBy))
 }

@@ -31,5 +31,5 @@ func (instr *RegisterAddress) Exec(a *asm.Assembler) {
 
 // String implements the string serialization.
 func (instr *RegisterAddress) String() string {
-	return fmt.Sprintf("[%d]   %s %v, <%v>", instr.size, mnemonicColor.Sprint(instr.Mnemonic), instr.Destination.StringWithUser(instr.UsedBy), instr.Address)
+	return fmt.Sprintf("[%d]     %s %v, <%v>", instr.size, mnemonicColor.Sprint(instr.Mnemonic), instr.Destination.StringWithUser(instr.UsedBy), instr.Address)
 }

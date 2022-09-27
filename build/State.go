@@ -45,6 +45,10 @@ func (state *State) CompileInstructions() error {
 		state.KillVariables(lastKillPos, instr.Position)
 		lastKillPos = instr.Position
 
+		if state.assembler.Verbose {
+			state.assembler.AddComment(instr.String())
+		}
+
 		err := state.Instruction(instr, index)
 
 		if err != nil {

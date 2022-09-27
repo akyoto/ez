@@ -7,7 +7,7 @@ import (
 	"github.com/akyoto/q/build/log"
 )
 
-// AddLabel is used for instructions that add a AddLabel.
+// AddLabel is used for instructions that add a label.
 type AddLabel struct {
 	Label string
 }
@@ -34,5 +34,5 @@ func (instr *AddLabel) Size() byte {
 
 // String implements the string serialization.
 func (instr *AddLabel) String() string {
-	return fmt.Sprintf("[0] %s:", log.Faint.Sprint(instr.Label))
+	return fmt.Sprintf("[0] %s:", log.FaintColor.Sprint(instr.Label))
 }
