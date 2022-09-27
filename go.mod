@@ -1,6 +1,6 @@
 module github.com/akyoto/q
 
-go 1.18
+go 1.19
 
 require (
 	github.com/akyoto/asm v0.5.0
@@ -13,5 +13,5 @@ require (
 require (
 	github.com/akyoto/colorable v0.1.7 // indirect
 	github.com/akyoto/tty v0.1.4 // indirect
-	golang.org/x/sys v0.0.0-20220808155132-1c4a2a72c664 // indirect
+	golang.org/x/sys v0.0.0-20220926163933-8cfa568d3c25 // indirect
 )
