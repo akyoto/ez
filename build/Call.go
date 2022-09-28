@@ -53,6 +53,8 @@ func (state *State) CallExpression(expr *expression.Expression) error {
 			state.assembler.MoveRegisterNumber(state.registers.Syscall[4], 290)
 			state.assembler.Syscall()
 
+			atomic.AddInt32(&state.function.SideEffects, 1)
+
 			if expr.Register != state.registers.ReturnValue[0] {
 				state.assembler.MoveRegisterRegister(expr.Register, state.registers.ReturnValue[0])
 			}
@@ -62,11 +64,6 @@ func (state *State) CallExpression(expr *expression.Expression) error {
 		}
 
 		return errors.New(state.environment.UnknownFunctionError(functionName))
-	}
-
-	// Calling a function with side effects causes our function to have side effects
-	if atomic.LoadInt32(&function.SideEffects) > 0 {
-		atomic.AddInt32(&state.function.SideEffects, 1)
 	}
 
 	// Parameter check
@@ -178,6 +175,11 @@ func (state *State) BeforeCall(function *Function, parameters []*expression.Expr
 	} else {
 		// Wait for function compilation to finish
 		function.Wait()
+
+		// Calling a function with side effects causes our function to have side effects
+		if atomic.LoadInt32(&function.SideEffects) > 0 {
+			atomic.AddInt32(&state.function.SideEffects, 1)
+		}
 
 		// If the function failed with a compilation error,
 		// we're done here.
