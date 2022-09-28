@@ -143,7 +143,7 @@ func (state *State) CallExpression(expr *expression.Expression) error {
 	if expr.Register != returnValueRegister {
 		if expr.Register != nil {
 			state.assembler.MoveRegisterRegister(expr.Register, returnValueRegister)
-			expr.Register.Use(expr)
+			_ = expr.Register.Use(expr)
 		}
 
 		returnValueRegister.Free()
