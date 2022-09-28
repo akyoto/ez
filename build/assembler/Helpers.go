@@ -75,6 +75,7 @@ func (a *Assembler) PushRegister(destination *register.Register) {
 
 func (a *Assembler) PopRegister(destination *register.Register) {
 	a.doRegister(mnemonics.POP, destination)
+	destination.Assign()
 }
 
 func (a *Assembler) DivRegister(destination *register.Register) {
@@ -87,10 +88,12 @@ func (a *Assembler) SignExtendToDX(destination *register.Register) {
 
 func (a *Assembler) MoveRegisterRegister(destination *register.Register, source *register.Register) {
 	a.doRegisterRegister(mnemonics.MOV, destination, source)
+	destination.Assign()
 }
 
 func (a *Assembler) MoveRegisterNumber(destination *register.Register, number uint64) {
 	a.doRegisterNumber(mnemonics.MOV, destination, number)
+	destination.Assign()
 }
 
 func (a *Assembler) StoreNumber(destination *register.Register, offset byte, byteCount byte, number uint64) {
@@ -103,10 +106,12 @@ func (a *Assembler) StoreRegister(destination *register.Register, offset byte, b
 
 func (a *Assembler) LoadRegister(destination *register.Register, source *register.Register, offset byte, byteCount byte) {
 	a.doRegisterMemory(mnemonics.LOAD, destination, source, offset, byteCount)
+	destination.Assign()
 }
 
 func (a *Assembler) MoveRegisterAddress(destination *register.Register, address uint32) {
 	a.doRegisterAddress(mnemonics.MOV, destination, address)
+	destination.Assign()
 }
 
 func (a *Assembler) CompareRegisterRegister(destination *register.Register, source *register.Register) {

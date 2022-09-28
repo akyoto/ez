@@ -191,7 +191,7 @@ func (state *State) BeforeCall(function *Function, parameters []*expression.Expr
 	for _, registerID := range usedRegisterIDs {
 		callModifiedRegister := state.registers.ByID(registerID)
 
-		if callModifiedRegister.IsFree() {
+		if callModifiedRegister.IsEmpty() {
 			continue
 		}
 
