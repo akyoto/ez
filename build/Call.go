@@ -146,6 +146,7 @@ func (state *State) CallExpression(expr *expression.Expression) error {
 	if expr.Register != returnValueRegister {
 		if expr.Register != nil {
 			state.assembler.MoveRegisterRegister(expr.Register, returnValueRegister)
+			expr.Register.Use(expr)
 		}
 
 		returnValueRegister.Free()
@@ -191,18 +192,18 @@ func (state *State) BeforeCall(function *Function, parameters []*expression.Expr
 	for _, registerID := range usedRegisterIDs {
 		callModifiedRegister := state.registers.ByID(registerID)
 
+		if callModifiedRegister.IsFree() {
+			continue
+		}
+
 		if callModifiedRegister.IsEmpty() {
 			continue
 		}
 
 		variable, isVariable := callModifiedRegister.User().(*Variable)
 
-		if !isVariable {
-			continue
-		}
-
 		// Don't push variables that are going to die after this instruction
-		if variable.AliveUntil < state.InstructionEndPosition() {
+		if isVariable && variable.AliveUntil < state.InstructionEndPosition() {
 			continue
 		}
 

@@ -229,10 +229,6 @@ go test -coverpkg=./...
 go test -bench=. ./benchmarks
 ```
 
-### Is there a community for this project?
-
-There is a Discord channel and a Telegram group for [sponsors](https://github.com/sponsors/akyoto).
-
 ## Style
 
 Please take a look at the [style guidelines](https://github.com/akyoto/quality/blob/master/STYLE.md) if you'd like to make a pull request.

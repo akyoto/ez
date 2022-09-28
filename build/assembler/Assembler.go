@@ -133,7 +133,6 @@ func (a *Assembler) doRegisterRegister(mnemonic string, destination *register.Re
 
 	a.Instructions = append(a.Instructions, instr)
 	a.UseRegisterID(destination.ID)
-	a.UseRegisterID(source.ID)
 }
 
 // doRegisterNumber adds an instruction using a register and a number.
@@ -207,7 +206,6 @@ func (a *Assembler) doMemoryRegister(mnemonic string, destination *register.Regi
 
 	a.Instructions = append(a.Instructions, instr)
 	a.UseRegisterID(destination.ID)
-	a.UseRegisterID(source.ID)
 }
 
 // doRegisterMemory adds an instruction using a register target and a source memory address.
@@ -228,7 +226,6 @@ func (a *Assembler) doRegisterMemory(mnemonic string, destination *register.Regi
 
 	a.Instructions = append(a.Instructions, instr)
 	a.UseRegisterID(destination.ID)
-	a.UseRegisterID(source.ID)
 }
 
 // doJump adds a jump instruction with a label operand.

@@ -1,10 +1,7 @@
 import string
 
 main() {
-	let a = makeHello()
-	let b = makeWorld()
-
-	helloWorld(a, b)
+	helloWorld(makeHello(), makeWorld())
 }
 
 helloWorld(a string.String, b string.String) {
