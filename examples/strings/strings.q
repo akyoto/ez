@@ -4,6 +4,10 @@ main() {
 	let a = makeHello()
 	let b = makeWorld()
 
+	helloWorld(a, b)
+}
+
+helloWorld(a string.String, b string.String) {
 	string.write(a)
 	string.write(b)
 }

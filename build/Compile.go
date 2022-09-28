@@ -175,6 +175,7 @@ func declareParameters(function *Function, scopes *ScopeStack, registers *regist
 		}
 
 		_ = variable.SetRegister(register)
+		register.Assign()
 		scopes.Add(variable)
 	}
 
