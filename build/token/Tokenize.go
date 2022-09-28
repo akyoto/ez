@@ -154,6 +154,8 @@ func Tokenize(buffer []byte, tokens []Token) ([]Token, uint16) {
 						text = append(text, '\\')
 					case '"':
 						text = append(text, '"')
+					case '0':
+						text = append(text, '\000')
 					}
 
 					escape = false
