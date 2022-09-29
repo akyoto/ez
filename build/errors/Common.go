@@ -7,6 +7,7 @@ var (
 	InvalidExpression           = &simple{"Invalid expression", false}
 	InvalidFunctionName         = &simple{"A function can not be named 'func' or 'fn'", false}
 	InvalidInstruction          = &simple{"Invalid instruction", false}
+	MissingArrayIndex           = &simple{"Missing array index", false}
 	MissingAssignmentOperator   = &simple{"Missing assignment operator", false}
 	MissingAssignmentExpression = &simple{"Missing assignment expression", false}
 	MissingEndingNewline        = &simple{"Missing newline at the end of the file", false}

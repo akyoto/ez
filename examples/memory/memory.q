@@ -5,12 +5,13 @@ main() {
 	# Allocate a few bytes
 	let length = 256
 	let buffer = mem.allocate(length)
+	buffer[0] = 65
+	buffer[1] = 66
+	buffer[2] = 67
+	buffer[3] = 68
+	buffer[4] = 10
 
-	store(buffer, 0, 1, 65)
-	store(buffer, 1, 1, 66)
-	store(buffer, 2, 1, 67)
-	store(buffer, 3, 1, 68)
-	store(buffer, 4, 1, 10)
+	# Write the buffer to the console
 	sys.write(1, buffer, 5)
 
 	# Free the memory
