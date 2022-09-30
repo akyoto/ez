@@ -1,9 +1,11 @@
 import sys
 
 main() {
-	# Calculate n'th fibonacci number
-	let n = 11
+	let f = fibonacci(11)
+	sys.exit(f)
+}
 
+fibonacci(n Int) -> Int {
 	mut b = 0
 	mut c = 1
 
@@ -13,5 +15,5 @@ main() {
 		c = a + b
 	}
 
-	sys.exit(b)
+	return b
 }
