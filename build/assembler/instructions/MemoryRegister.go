@@ -36,5 +36,5 @@ func (instr *MemoryRegister) Exec(a *asm.Assembler) {
 
 // String implements the string serialization.
 func (instr *MemoryRegister) String() string {
-	return fmt.Sprintf("[%d]     %s %dB [%v+%d], %s", instr.size, mnemonicColor.Sprint(instr.Mnemonic), instr.ByteCount, instr.Destination.StringWithUser(instr.UsedBy1), instr.Offset, instr.Source.StringWithUser(instr.UsedBy2))
+	return fmt.Sprintf("%s %dB [%v+%d], %s", mnemonicColor.Sprint(instr.Mnemonic), instr.ByteCount, instr.Destination.StringWithUser(instr.UsedBy1), instr.Offset, instr.Source.StringWithUser(instr.UsedBy2))
 }

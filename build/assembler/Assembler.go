@@ -74,8 +74,21 @@ func (a *Assembler) UsedRegisterIDs() []register.ID {
 // WriteTo generates the final assembly code.
 func (a *Assembler) WriteTo(logger *log.Logger) {
 	for _, instr := range a.Instructions {
+		switch instr.Name() {
+		case "LABEL":
+			logger.SetPrefix("")
+
+		case "COMMENT":
+			logger.SetPrefix("  ")
+
+		default:
+			logger.SetPrefix("    ")
+		}
+
 		logger.Println(instr.String())
 	}
+
+	logger.SetPrefix("")
 }
 
 // lastInstruction returns the last added instruction.

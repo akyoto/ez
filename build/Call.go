@@ -105,41 +105,30 @@ func (state *State) CallExpression(expr *expression.Expression) error {
 	}
 
 	// Call the function
-	if functionName == BuiltinSyscall {
-		pushRegisters, callRegisters, err := state.BeforeCall(function, parameters)
-
-		if err != nil {
-			return err
-		}
-
-		state.assembler.Syscall()
-		state.AfterCall(function, pushRegisters, callRegisters)
-	} else {
-		pushRegisters, callRegisters, err := state.BeforeCall(function, parameters)
-
-		if err != nil {
-			return err
-		}
-
-		// Inline the function call if it's a little function
-		if function.CanInline() {
-			function.InlineInto(state.function)
-		} else {
-			state.assembler.Call(functionName)
-		}
-
-		state.AfterCall(function, pushRegisters, callRegisters)
-	}
-
-	// Mark return value register temporarily as used for better assembly output
-	returnValueRegister := state.registers.ReturnValue[0]
-	err := returnValueRegister.Use(expr)
+	pushRegisters, callRegisters, err := state.BeforeCall(function, parameters)
 
 	if err != nil {
 		return err
 	}
 
+	if functionName == BuiltinSyscall {
+		state.assembler.Syscall()
+	} else {
+		if function.CanInline() {
+			function.InlineInto(state.function)
+		} else {
+			state.assembler.Call(functionName)
+		}
+	}
+
+	// Free the call registers
+	for _, callRegister := range callRegisters {
+		callRegister.Free()
+	}
+
 	// Save return value in temporary register
+	returnValueRegister := state.registers.ReturnValue[0]
+
 	if expr.Register != returnValueRegister {
 		if expr.Register != nil {
 			state.assembler.MoveRegisterRegister(expr.Register, returnValueRegister)
@@ -153,6 +142,7 @@ func (state *State) CallExpression(expr *expression.Expression) error {
 		expr.Type = function.ReturnTypes[0]
 	}
 
+	state.AfterCall(function, pushRegisters, callRegisters)
 	return nil
 }
 
@@ -290,11 +280,6 @@ func (state *State) AfterCall(function *Function, pushedRegisters []*register.Re
 	// Restore saved registers
 	for i := len(pushedRegisters) - 1; i >= 0; i-- {
 		state.assembler.PopRegister(pushedRegisters[i])
-	}
-
-	// Free the call registers
-	for _, callRegister := range callRegisters {
-		callRegister.Free()
 	}
 }
 

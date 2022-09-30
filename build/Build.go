@@ -149,10 +149,8 @@ func (build *Build) Compile() (*asm.Assembler, error) {
 
 		// Show assembler code of used functions
 		if build.ShowAssembly {
-			log.Info.SetPrefix(log.FaintColor.Sprint(function.Name) + " ")
+			log.Info.Println(strings.Repeat("=", 80))
 			function.assembler.WriteTo(log.Info)
-			log.Info.SetPrefix("")
-			log.Info.Println()
 		}
 	}
 

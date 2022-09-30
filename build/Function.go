@@ -95,6 +95,19 @@ func (function *Function) UsedRegisterIDs() []register.ID {
 	return function.assembler.UsedRegisterIDs()
 }
 
+// UsedRegisterNames returns the names of used registers.
+func (function *Function) UsedRegisterNames() []string {
+	list := []string{}
+	manager := register.NewManager()
+	usedRegisterIDs := function.UsedRegisterIDs()
+
+	for _, registerID := range usedRegisterIDs {
+		list = append(list, manager.ByID(registerID).Name)
+	}
+
+	return list
+}
+
 // Wait will block until the compilation finishes.
 func (function *Function) Wait() {
 	if function.IsBuiltin {

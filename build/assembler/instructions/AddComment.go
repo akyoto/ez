@@ -1,8 +1,6 @@
 package instructions
 
 import (
-	"fmt"
-
 	"github.com/akyoto/asm"
 	"github.com/akyoto/q/build/log"
 )
@@ -19,7 +17,7 @@ func (instr *AddComment) Exec(a *asm.Assembler) {
 
 // Name returns the empty string.
 func (instr *AddComment) Name() string {
-	return ""
+	return "COMMENT"
 }
 
 // SetName sets the mnemonic.
@@ -34,5 +32,5 @@ func (instr *AddComment) Size() byte {
 
 // String implements the string serialization.
 func (instr *AddComment) String() string {
-	return fmt.Sprintf("[0]   %s", log.CommentColor.Sprint(instr.Comment))
+	return log.CommentColor.Sprint(instr.Comment)
 }

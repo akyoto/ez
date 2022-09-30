@@ -48,5 +48,5 @@ func (instr *Jump) Exec(a *asm.Assembler) {
 
 // String implements the string serialization.
 func (instr *Jump) String() string {
-	return fmt.Sprintf("[%d]     %s %s", instr.size, mnemonicColor.Sprint(instr.Mnemonic), instr.Label)
+	return fmt.Sprintf("%s %s", mnemonicColor.Sprint(instr.Mnemonic), instr.Label)
 }

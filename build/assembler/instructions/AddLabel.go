@@ -19,7 +19,7 @@ func (instr *AddLabel) Exec(a *asm.Assembler) {
 
 // Name returns the empty string.
 func (instr *AddLabel) Name() string {
-	return ""
+	return "LABEL"
 }
 
 // SetName sets the mnemonic.
@@ -34,5 +34,5 @@ func (instr *AddLabel) Size() byte {
 
 // String implements the string serialization.
 func (instr *AddLabel) String() string {
-	return fmt.Sprintf("[0] %s:", log.FaintColor.Sprint(instr.Label))
+	return fmt.Sprintf("%s:", log.FaintColor.Sprint(instr.Label))
 }
